@@ -1,0 +1,30 @@
+# Dockerfile (Python 3.11 + Django + MySQL)
+FROM python:3.11-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    PIP_NO_CACHE_DIR=1
+
+# เครื่องมือ build และ client lib สำหรับ MySQL
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential gcc default-libmysqlclient-dev pkg-config \
+ && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# ติดตั้งไลบรารีจาก requirements (ถ้ามีไฟล์)
+COPY requirements.txt /app/
+RUN if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+# ไลบรารีเสริม
+RUN pip install gunicorn mysqlclient dj-database-url
+
+# คัดลอกโค้ดที่เหลือ
+COPY . /app/
+
+# เก็บ static (ถ้า settings ยังไม่ครบให้ผ่านไปก่อน)
+RUN python manage.py collectstatic --noinput || true
+
+EXPOSE 8000
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "django_end.wsgi:application"]

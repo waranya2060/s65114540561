@@ -1,0 +1,130 @@
+{% extends "api/base2.html" %}
+
+
+
+{% block content %}
+<style>
+  body {
+  /* margin: 0; */
+  font-family: Nunito,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  /* font-size: 1rem; */
+  /* font-weight: 400; */
+  line-height: 1.5;
+  color: #000000;
+  text-align: left;
+  }
+  .table {
+  width: 100%;
+  margin-bottom: 1rem;
+  color: #000000;
+  
+  text-align: center;
+}
+</style>
+<div id="content-wrapper">
+
+  <div class="container-fluid">
+   
+      <div class="card mb-3">
+          <div class="card-header">
+              <i class="fas fa-table"></i>
+              ยืนยันการชำระเงิน 
+          </div>
+          <div class="card-body">
+            <!-- <form class="form-horizontal"  method="POST"> -->
+              <form class="form-horizontal" action="/payment/โอนผ่านบัญชีธนาคาร" method="POST"  enctype="multipart/form-data">
+              {% csrf_token %}
+
+              <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-9">
+                        <div class="form-label-group">
+                          <label for="exampleInputFile"><b>ยอดการชำระเงินทั้งหมด : {{order.get_total}} บาท</b></label> 
+                          <!-- <input type="file" class="form-control-file" id="exampleInputFile" name="img" aria-describedby="fileHelp" required> -->
+                        </div>
+                    </div>
+                 
+                </div>
+              </div>
+              <hr>
+              {% for n in bankTransfer %}
+              <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-9">
+                        <div class="form-label-group">
+                          <center> <img src="/media/{{ n.qrcode }}" width="350" height="400"> </center> <br>
+                          <label for="exampleInputFile"><b>  {{n.bankName}} </b>  </label> <br>
+                          <label for="exampleInputFile"><b> ชื่อบัญชี : </b> {{n.accountName}} </label> <br>
+                          <label for="exampleInputFile"><b>เลขบัญชี :  </b> {{n.accountNo}}  </label> <br>
+                         
+            
+                          <!-- <input type="file" class="form-control-file" id="exampleInputFile" name="img" aria-describedby="fileHelp" required> -->
+                        </div>
+                    </div>
+                 
+                </div>
+              </div>
+              <hr>
+              {% endfor %}
+              <hr>
+              <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-9">
+                        <div class="form-label-group">
+                          <label for="exampleInputFile"><b>อัพโหลดหลักฐานการชำระเงิน</b></label> 
+                          <input type="file" class="form-control-file" id="exampleInputFile" name="img" aria-describedby="fileHelp" required>
+                        </div>
+                    </div>
+                 
+                </div>
+              </div>
+              <!-- <div class="form-group">
+                  <div class="form-row">
+                      <div class="col-md-9">
+                          <div class="form-label-group">
+                            <label for="ppp" class="">โอนจากธนาคาร</label>
+                            <input type='text' placeholder='1234 Main St' id='ppp' name='ppp' class='form-control' />
+                            
+                          </div>
+                      </div>
+                   
+                  </div>
+              </div> -->
+              <!-- <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-9">
+                        <div class="form-label-group">
+                          {{ form }}
+                          <label for="ppp" class="">ราคา</label>
+                          <input type='text' placeholder='1234 Main St' id='ppp' name='ppp' class='form-control' />
+                          
+                        </div>
+                    </div>
+                 
+                </div>
+            </div> -->
+          
+            <!-- <table class="form form-table">
+              {{ form }}
+            
+            </table>
+    -->
+       
+       
+     
+              
+                <!-- <button id="stripeBtn">Submit Payment</button> -->
+              
+  
+      <button class="btn btn-primary btn-lg btn-block" type="submit">ยืนยัน</button>
+          </form>
+          </div>
+      </div>
+  </div>
+</div>
+
+{% endblock content %}
+
+  
+
+

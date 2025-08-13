@@ -1,0 +1,113 @@
+{% extends 'api/base.html' %}
+
+{% block content %}
+<style>
+  body {
+  margin: 0;
+  font-family: Nunito,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #000000;
+  text-align: left;
+  }
+  .table {
+  width: 100%;
+  margin-bottom: 1rem;
+  color: #000000;
+  
+  text-align: center;
+}
+</style>
+
+<div id="content-wrapper">
+
+  <div class="container-fluid">
+      <!-- Breadcrumbs-->
+      <!-- <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+              <a href="#">CRUD</a>
+          </li>
+          <li class="breadcrumb-item active">Add</li> -->
+      </ol>
+      <div class="card mb-3">
+          <div class="card-header">
+              <i class="fas fa-table"></i>
+              เพิ่มหมวดหมู่สินค้า
+          </div>
+          <div class="card-body">
+            <form class="form-horizontal" action="/addproductType" method="POST"  enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="form-group">
+                  <div class="form-row">
+                      <div class="col-md-9">
+                          <div class="form-label-group">
+                            <label for="product_type"><b>ชื่อหมวดหมู่สินค้า</b></label>
+                            <input type="text" class="form-control" placeholder="กรุณากรอกชื่อหมวดหมู่สินค้า" name="product_type" required>
+                           
+                              <!-- <input type="text" class="form-control" name="product_name" placeholder="กรุณากรอกชื่อสินค้า" id="inputFirst" required>  -->
+                          </div>
+                      </div>
+                   
+                  </div>
+              </div>
+  
+              <button class="btn btn-primary btn-block" type="submit">เพิ่มหมวดหมู่สินค้า
+                &nbsp;&nbsp;&nbsp;<span></span></button>
+          </form>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+
+<!-- ////////////////////////// -->
+<div id="content-wrapper">
+
+    <div class="container-fluid">
+     
+        <div class="card mb-3">
+            <div class="card-header">
+                <i class="fas fa-table"></i>
+                หมวดหมู่
+                <!-- <a  class="btn btn-sm btn-success" href="/addproductType" style="padding: 8px; float: right; background-color: green; color: white;">ADD</a> -->
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" align="center">
+                        <thead>
+                        <tr>
+                          <th>id</th>
+                          <!-- <th>รูปโปรไฟล์</th> -->
+                            <th>ชื่อ</th>
+                            <th>แก้ไข</th> 
+                            <th>ลบ</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                          {% csrf_token %} 
+                        {% for i in product_type %}
+                      
+                            <tr>
+                              <td>{{ i.id }}</td>
+                              <!-- <td><img src="media/{{i.avatar}}" style="height: 75px;"></td> -->
+                                <td>{{ i.product_type }}</td>
+                                
+                                <!-- <td>{{ i.created_at  |date:"d-m-Y H:i:s" }}</td> -->
+                                <td>                                   
+                                    <a class="btn btn-sm btn-warning" href="/editproductType/{{i.id}}"> <span class="fa fa-edit"></span> Edit</a>
+                                    
+                                </td>
+                                <td><a class="btn btn-sm btn-danger" href="deleteproductType/{{i.id}}"><span class="fa fa-trash"></span> Delete</a></td>
+                            </tr>
+                            
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+{% endblock %}

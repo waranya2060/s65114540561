@@ -1,0 +1,62 @@
+{% extends 'api/base2.html' %}
+
+{% block content %}
+<style>
+    .container-fluid {
+    width: 100%;
+    padding-right: 100px;
+    padding-left: 100px;
+    margin-right: 100;
+    margin-left: 100;
+}
+    
+</style>
+
+<div id="content-wrapper">
+
+  <div class="container-fluid">
+      <!-- Breadcrumbs-->
+      <!-- <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+              <a href="#">CRUD</a>
+          </li>
+          <li class="breadcrumb-item active">Add</li> -->
+      </ol>
+      <div class="card mb-3">
+          <div class="card-header">
+              <i class="fas fa-table"></i>
+              โปรไฟล์
+              <a  class="btn btn-sm btn-warning" href="/editprofile/{{ users.id }}/" style="padding: 8px; float: right;  color: white;" > <span class="fa fa-edit"></span> Edit</a>
+          </div>
+          <div class="card-body">
+            <form class="form-horizontal" action="/profile" method="POST"  enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="form-group">
+                  <div class="form-row">
+                      <div class="col-md-12">
+                          <div class="form-label-group">
+                           <br>
+                           <center> <img src="/media/{{users.avatar}}" width="200" height="200"> </center> <br>
+                           <center><label for="stores"><b>username : </b>{{users.username}}</label> </center> 
+                           <center><label for="stores"><b>อีเมล : </b>{{users.email}}</label> </center> 
+                           <center><label for="stores"><b>เบอร์โทรศัพท์ : </b>{{users.phone}}</label> </center> 
+                           <center><label for="stores"><b>ชื่อ-สกุล : </b>{{users.first_name}} {{users.last_name}}</label> </center>
+                           <!-- <center><label for="stores"><b>นามสกุล : </b>{{users.last_name}}</label> </center> -->
+<!--                          
+                          <center><label for="lat"><b>ที่อยู่ร้าน : </b>{{store.lat}}</label> </center>
+                          <center><label for="stores"><b>ที่อยู่ร้าน : </b>{{store.lng}}</label> </center> -->
+                            <!-- <input type="text" class="form-control" placeholder="กรุณากรอกชื่อสินค้า" name="product_name" required> -->
+                           
+                              <!-- <input type="text" class="form-control" name="product_name" placeholder="กรุณากรอกชื่อสินค้า" id="inputFirst" required>  -->
+                          </div>
+                      </div>
+                   
+                  </div>
+              </div>
+              
+          </form>
+          </div>
+      </div>
+  </div>
+</div>
+{% endblock %}

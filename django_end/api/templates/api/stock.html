@@ -1,0 +1,135 @@
+{% extends 'api/base.html' %}
+
+{% block content %}
+
+<style>
+    body {
+    margin: 0;
+    font-family: Nunito,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #000000;
+    text-align: left;
+    }
+    .table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #000000;
+    
+    text-align: center;
+}
+</style>
+<div id="content-wrapper">
+  <div class="container-fluid">  
+      <div class="card mb-3">
+          <div class="card-header">
+              <i class="fas fa-table"></i>
+              คลังสินค้า
+
+              <!-- <a  class="btn btn-sm btn-success" href="/stock" style="padding: 8px; float: right; background-color: green; color: white;">ADD</a> -->
+          </div>
+ 
+          <!-- <nav class="navbar navbar-light bg-light justify-content-between">
+            <a class="navbar-brand"></a>
+            <form class="form-inline">
+              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search">
+              <button class="btn btn-outline-success my-2 my-sm-0"name="search" type="submit">Search</button>
+            </form>
+          </nav> -->
+          <div class="card-body">
+              <!-- {% for message in messages %}
+                  <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+                      {{ message }}
+                  </div> 
+              {% endfor %} -->
+              
+              <div class="table-responsive">
+                  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" align="center">
+                      <thead>
+                      <tr>
+                        <th>id</th>
+                         <th>รูป</th>
+                          <th>ชื่อ</th>
+                          <th>ราคา</th>
+                          <th>หมวดหมู่</th>
+                           <th>สถานะสินค้า</th>
+                          <th>จำนวน</th>
+                         
+                          <!-- <th>จำนวน</th> -->
+                          <!-- <th>Buy</th> -->
+                          <th>Add Stock</th> 
+                          <!-- <th>ลบ</th> -->
+                      </tr>
+                      </thead>
+                      <tbody>
+                        {% csrf_token %} 
+                      {% for product in products %}
+                    
+                          <tr>
+                            <td>{{ product.id }}</td>
+                            <td><img src="media/{{product.product_img}}" style="height: 60px;"></td>
+                            <td>{{ product.name }}</td>
+                            <td>{{ product.price }}</td>
+                            <td>{{ product.product_type }}</td> 
+
+
+                            <td>   
+                               
+                                
+                              {% if product.quantity > 0 %}
+                                
+                               
+                                 คงเหลือ
+                                {% else %}
+                                หมดแล้ว
+                                {% endif %}
+                                
+                              </td>  
+                            <!-- <td>{{ product.product_status}}</td>  -->
+                            <td>{{ product.quantity}}</td>
+                           
+                              
+                              
+                              
+                              
+                             
+<!-- 
+                              <td><a href="/issue_item/{{product.id}}"
+                                ><input
+                                  type="submit"
+                                  value="BUY ITEM"
+                                  class="btn btn-secondary btn"
+                                  type="button"
+                              /></a></td>
+                         -->
+
+                              <td><a href="/add_to_stock/{{product.id}}"
+                                ><input
+                                  type="submit"
+                                  value="Add Stock"
+                                  class="btn btn-secondary btn"
+                                  type="button"
+                              /></a></td>
+
+
+
+
+                             
+                              <!-- <td><a class="b/tn btn-sm btn-danger" href="deletestorcks/{{product.id}}"><span class="fa fa-trash"></span> Delete</a></td> -->
+                          </tr>
+                          
+                      {% endfor %}
+                      </tbody>
+                  
+                    </table>
+                  
+                    </div>
+                    
+               
+
+                </div>
+                </div>
+                </div>
+                </div>
+                {% endblock %}

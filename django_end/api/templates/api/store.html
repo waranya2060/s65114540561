@@ -1,0 +1,65 @@
+{% extends 'api/base.html' %}
+
+{% block content %}
+<style>
+    body {
+    margin: 0;
+    font-family: Nunito,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #000000;
+    text-align: left;
+    }
+    
+</style>
+
+<div id="content-wrapper">
+
+  <div class="container-fluid">
+      <!-- Breadcrumbs-->
+      <!-- <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+              <a href="#">CRUD</a>
+          </li>
+          <li class="breadcrumb-item active">Add</li> -->
+      </ol>
+      <div class="card mb-3">
+          <div class="card-header">
+              <i class="fas fa-table"></i>
+              ข้อมูลร้าน
+              <a  class="btn btn-sm btn-warning" href="/editstore/{{store.id}}" style="padding: 8px; float: right;  color: white;" > <span class="fa fa-edit"></span> Edit</a>
+              <!-- <a  class="btn btn-sm btn-primary" href="/addstore" style="padding: 8px; float: right;  color: white;" > add</a> -->
+          </div>
+          <div class="card-body">
+            <form class="form-horizontal" action="/store" method="POST"  enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="form-group">
+                  <div class="form-row">
+                      <div class="col-md-12">
+                          <div class="form-label-group">
+                           <br>
+                           
+                           <center> <img src="media/{{store.store_img}}" width="500" height="360"> </center> <br>
+                           <center><label for="stores"><b>ชื่อร้าน : </b>{{store.store_name}}</label> </center> 
+                           <center><label for="stores"><b>เบอร์โทรศัพท์ : </b>{{store.store_phone}}</label> </center> 
+                           <center><label for="stores"><b>ที่อยู่ร้าน : </b>{{store.store_address}}</label> </center>
+                           <center><label for="stores" ><b>  อื่น ๆ : </b>{{store.store_detail}}</label> </center>
+                         
+                          <!-- <center><label for="lat"><b>ที่อยู่ร้าน : </b>{{store.lat}}</label> </center>
+                          <center><label for="stores"><b>ที่อยู่ร้าน : </b>{{store.lng}}</label> </center> -->
+                            <!-- <input type="text" class="form-control" placeholder="กรุณากรอกชื่อสินค้า" name="product_name" required> -->
+                           
+                              <!-- <input type="text" class="form-control" name="product_name" placeholder="กรุณากรอกชื่อสินค้า" id="inputFirst" required>  -->
+                          </div>
+                      </div>
+                   
+                  </div>
+              </div>
+              
+          </form>
+          </div>
+      </div>
+  </div>
+</div>
+{% endblock %}

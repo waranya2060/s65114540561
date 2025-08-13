@@ -1,0 +1,121 @@
+{% extends 'api/base.html' %}
+
+{% block content %}
+
+<style>
+    body {
+    margin: 0;
+    font-family: Nunito,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #000000;
+    text-align: left;
+    }
+    .table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #000000;
+    
+    text-align: center;
+}
+</style>
+<div id="content-wrapper">
+
+  <div class="container-fluid">
+      <!-- Breadcrumbs-->
+      <!-- <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+              <a href="#">Dashboard</a>
+          </li>
+          <li class="breadcrumb-item active">CRUD</li>
+      </ol> -->
+      <div class="card mb-3">
+          <div class="card-header">
+              <i class="fas fa-table"></i>
+              ข้อมูลช่าง
+              <a  class="btn btn-sm btn-success" href="/addmechanic" style="padding: 8px; float: right; background-color: green; color: white;">ADD</a>
+          </div>
+          <div class="card-body">
+              <div class="table-responsive">
+                  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" align="center">
+                      <thead>
+                      <tr>
+                        <th>id</th>
+                        <th>รูปโปรไฟล์</th>
+                          <th>ชื่อ-นามสกุล</th>
+                          <th>เบอร์โทรศัพท์</th>
+                          <th>อีเมล</th>
+                          
+                          <th>รายละเอียดงานช่าง</th>
+                          <th>รูปงานช่าง</th>
+                          <th>ประเภทช่าง</th>
+                          <!-- <th>Created At</th> -->
+                          <th>แก้ไข</th> 
+                          <th>ลบ</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                        {% csrf_token %} 
+                      {% for i in mechanics %}
+                    
+                          <tr>
+                            <td>{{ i.id }}</td>
+                            <td><img src="media/{{i.avatar}}" style="height: 75px;"></td>
+                              <td>{{ i.mechanic_fname }} {{ i.mechanic_lname }}</td>
+                              <!-- <td>{{ i.mechanic_lname }}</td> -->
+                              <td>{{ i.mechanic_phone }}</td>
+                              <td>{{ i.mechanic_email }}</td>
+                              <!-- <td>{{ i.avatar }}</td> -->
+                              
+                              <td>{{ i.mechanic_detail }}</td>
+                              <td><img src="media/{{i.mechanic_img}}" style="height: 75px;"></td>
+                              <td>{{ i.mechanic_type }}</td>
+                              <!-- <td>{{ i.created_at  |date:"d-m-Y H:i:s" }}</td> -->
+                              <td>                                   
+                                  <a class="btn btn-sm btn-warning" href="/editmechanic/{{i.id}}"> <span class="fa fa-edit"></span> Edit</a>
+                                  
+                              </td>
+                              <td><a class="btn btn-sm btn-danger" href="deletemechanic/{{i.id}}"><span class="fa fa-trash"></span> Delete</a></td>
+                          </tr>
+                          
+                      {% endfor %}
+                      </tbody>
+                  </table>
+                  {% if mechanics.has_other_pages %}
+                  <ul class="pagination">
+                    {% if mechanics.has_previous %}
+                      <li><a class="page-link" href="?page={{ mechanics.previous_page_number }}">&laquo;  Previous</a></li>
+                      <li><a class="page-link" href="?page={{ mechanics.previous_page_number }}">{{ mechanics.previous_page_number }} </a></li>
+                    {% else %}
+                      <li class="disabled page-link"><span>&laquo;Previous</span></li>
+                    {% endif %}
+                      <!--   หน้าปัจจุบัน -->
+                    <li class="page-item active">
+                      <span class="page-link">
+                          <span class="current" >
+                              {{ mechanics.number }} 
+                            </span>
+                       
+                      </span>
+                    </li>
+                        <!-- หน้าถัดไป -->
+                    {% if mechanics.has_next %}
+                      
+                      <li><a class="page-link"  href="?page={{ mechanics.next_page_number }}">Next &raquo; </a></li>
+                    {% else %}
+                      <li class="disabled page-link"><span>Next &raquo;</span></li>
+                    {% endif %}
+                  </ul>
+                {% endif %}
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+{% endblock %}
+
+    <!-- <script type="text/javascript">
+        $("#id_username").attr("placeholder", "Enter Username");
+        $("#id_password").attr("placeholder", "Enter Password");
+    </script>  -->

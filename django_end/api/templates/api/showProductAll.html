@@ -1,0 +1,51 @@
+{% extends 'api/base2.html' %}
+{% block content %}
+
+<style>
+
+.section-margin {
+    margin: 35px 0;
+}
+</style>
+
+  <!-- ================ trending product section start ================= -->  
+  <section class="section-margin">
+    <div class="container">
+      <div class="section-intro pb-60px">
+        <!-- <p>Popular Item in the market</p> -->
+        <h2> <span class="section-intro__style">ทั้งหมด</span></h2>
+      </div>
+      <div class="row">
+
+     {% csrf_token %} 
+     <!-- <div class="row"> -->
+     {% for product in product %}
+
+     <div class="col-md-6 col-lg-4 col-xl-3">
+        <div class="card text-center card-product">
+          <div class="card-product__img">
+          <img class="card-img" src="/media/{{product.product_img}}" style="height: 180px;"  href="/">
+            <ul class="card-product__imgOverlay">
+                <li>  <a class="btn btn-sm" href="/productDetail/{{product.id}}" style="padding: 8px; float: right; background-color: rgb(116, 89, 139); color: rgb(255, 255, 255);"> <span></span>รายละเอียดสินค้า</a></li>
+                <!-- <li>  <a class="btn btn-sm btn-primary" href="/mechanicDetailUser/{{mechanic.id}}"> <span></span></a></li> -->
+              <!-- <li ><button href="/mechanicDetailUser/{{mechanic.id}}" ><i class="ti-search" href="/mechanicDetailUser/{{mechanic.id}}"></i> </button></li>
+              <li><button><i class="ti-shopping-cart"></i></button></li> -->
+              <!-- <li><button><i class="ti-heart"></i></button></li> -->
+            </ul>
+          </div>
+          <div class="card-body">
+            <!-- <p>ราคา : {{ product.product_price }} บาท</p> -->
+            <h4 class="card-product__title"><a href="/productDetail/{{product.id}}">{{product.name}}</a></h4>
+            <p class="card-product__price">ราคา : {{product.price}}  บาท</p>
+          </div>
+        </div>
+      </div>
+
+        {% endfor %}
+    <!-- </div> -->
+    
+      </div>
+    </div>
+  </section>
+
+{% endblock %}

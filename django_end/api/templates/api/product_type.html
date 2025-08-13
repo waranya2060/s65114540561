@@ -1,0 +1,23 @@
+{% extends 'api/base2.html' %}
+{% load static %}
+{% block content %}
+<main class="container my-4">
+	<!-- Featured Products -->
+	<h3 class="my-4 border-bottom pb-1">Categories</h3>
+	<div class="row">
+		{% if product_type %}
+			{% for cat in product_type %}
+			<div class="col-md-3 mb-4">
+				<div class="card shadow">
+				<!-- <a href="/"></a> -->
+                <!-- <a href="/productTypeUser/{{cat.id}}"></a>s -->
+				<div class="card-body">
+					<h6 class="card-text"><a href="/productTypeUser/{{cat.id}}">{{cat.product_type}}</a></h6>
+				</div>
+				</div>
+			</div>
+			{% endfor %}
+		{% endif %}
+	</div>
+</main>
+{% endblock %}

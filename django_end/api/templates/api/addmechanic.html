@@ -1,0 +1,150 @@
+{% extends 'api/base.html' %}
+
+{% block content %}
+<style>
+  body {
+  margin: 0;
+  font-family: Nunito,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #000000;
+  text-align: left;
+  }
+  .table {
+  width: 100%;
+  margin-bottom: 1rem;
+  color: #000000;
+  
+  text-align: center;
+}
+</style>
+
+<div id="content-wrapper">
+
+  <div class="container-fluid">
+
+      <div class="card mb-3">
+          <div class="card-header">
+              <i class="fas fa-table"></i>
+              เพิ่มข้อมูลช่าง
+              <a  class="btn btn-sm btn-success" href="/mechanic" style="padding: 8px; float: right; background-color: rgb(53, 122, 155); color: white;">Back</a>
+          </div>
+          <div class="card-body">
+            <form class="form-horizontal" action="/addmechanic" method="POST"  enctype="multipart/form-data">
+              {% csrf_token %}
+
+              <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-9">
+                        <div class="form-label-group">
+                          <label for="exampleInputFile"><b>เลือกรูปโปรไฟล์ช่าง</b></label> 
+                          <input type="file" class="form-control-file" id="exampleInputFile" name="avatar" aria-describedby="fileHelp" required>
+                        </div>
+                    </div>
+                 
+                </div>
+            </div>
+
+
+              <div class="form-group">
+                  <div class="form-row">
+                      <div class="col-md-9">
+                          <div class="form-label-group">
+                            <label for="mechanic_fname"><b>ชื่อ</b></label>
+                            <input type="text" class="form-control" placeholder="กรุณากรอกชื่อ" name="mechanic_fname" required>
+                           
+                              <!-- <input type="text" class="form-control" name="product_name" placeholder="กรุณากรอกชื่อสินค้า" id="inputFirst" required>  -->
+                          </div>
+                      </div>
+                   
+                  </div>
+              </div>
+              <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-9">
+                        <div class="form-label-group">
+                          <label for="mechanic_lname"><b>นามสกุล</b></label>
+                          <input type="text" class="form-control" placeholder="กรุณากรอกนามสกุล" name="mechanic_lname" required>
+                            <!-- <input type="text" class="form-control" name="product_name" placeholder="กรุณากรอกชื่อสินค้า" id="inputFirst" required>  -->
+                        </div>
+                    </div>
+                 
+                </div>
+            </div>
+            <div class="form-group">
+              <div class="form-row">
+                  <div class="col-md-9">
+                      <div class="form-label-group">
+                        <label for="mechanic_phone"><b>เบอร์โทรศัพท์</b></label>
+                        <input type="text" class="form-control" placeholder="กรุณากรอกเบอร์โทรศัพท์" name="mechanic_phone" required>
+                          <!-- <input type="text" class="form-control" name="product_name" placeholder="กรุณากรอกชื่อสินค้า" id="inputFirst" required>  -->
+                      </div>
+                  </div>
+               
+              </div>
+          </div>
+
+          <div class="form-group">
+            <div class="form-row">
+                <div class="col-md-9">
+                    <div class="form-label-group">
+                      <label for="mechanic_email"><b>อีเมล</b></label>
+                      <input type="text" class="form-control" placeholder="กรุณากรอกอีเมล" name="mechanic_email" required>
+                        <!-- <input type="text" class="form-control" name="product_name" placeholder="กรุณากรอกชื่อสินค้า" id="inputFirst" required>  -->
+                    </div>
+                </div>
+             
+            </div>
+        </div>
+
+            <div class="form-group">
+              <div class="form-row">
+                  <div class="col-md-9">
+                      <div class="form-label-group">
+                        <label for="mechanic_detail"><b>รายละเอียดงานของช่าง</b></label>
+                            <div class="form-group">
+                            
+                              <textarea class="form-control" rows="4" name="mechanic_detail" placeholder ="รายละเอียดงานของช่าง"required></textarea >
+                            </div>
+                      </div>
+                  </div>
+               
+              </div>
+          </div>
+          <div class="form-group">
+            <div class="form-row">
+                <div class="col-md-9">
+                    <div class="form-label-group">
+                      <label for="exampleInputFile"><b>เลือกรูปงานของช่าง</b></label> 
+                      <input type="file" class="form-control-file" id="exampleInputFile" name="mechanic_img" aria-describedby="fileHelp" required>
+                    </div>
+                </div>
+             
+            </div>
+        </div>
+        <div class="form-group">
+          <div class="form-row">
+              <div class="col-md-9">
+                  <div class="form-label-group">
+                    <label for="exampleSelect1"><b> ประเภทช่าง</b></label>
+                    <select class="form-control" id="Select" name="mechanic_type" required>
+            
+                      {% for c in mechanic_type %}
+                      <option value="{{c.id}}">{{ c.mechanic_type }}</option>  
+                      {% endfor %}
+                    </select>
+                
+                  </div>
+              </div>
+           
+          </div>
+      </div>
+     
+              <button class="btn btn-primary btn-block" type="submit">เพิ่มข้อมูลช่าง &nbsp;&nbsp;&nbsp;<span></span></button>
+          </form>
+          </div>
+      </div>
+  </div>
+</div>
+{% endblock %}

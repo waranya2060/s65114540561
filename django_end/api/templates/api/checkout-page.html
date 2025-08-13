@@ -1,0 +1,280 @@
+{% extends "api/base2.html" %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+<style>
+  .nice-select {
+      -webkit-tap-highlight-color: transparent;
+      background-color: #fff;
+      border-radius: 5px;
+      border: solid 1px #e8e8e8;
+      box-sizing: border-box;
+      clear: both;
+      cursor: pointer;
+      display: block;
+      float: none;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: normal;
+      height: 42px;
+      line-height: 40px;
+      outline: none;
+      padding-left: 19px;
+      padding-right: 38px;
+      position: relative;
+      text-align: left !important;
+      -webkit-transition: all 0.2s ease-in-out;
+      transition: all 0.2s ease-in-out;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      white-space: nowrap;
+      width: auto;
+  }
+
+  .nice-select .option {
+    cursor: pointer;
+    font-weight: 400;
+    line-height: 40px;
+    list-style: none;
+    min-height: 40px;
+    outline: none;
+    padding-left: 18px;
+    padding-right: 322px;
+    text-align: left;
+    -webkit-transition: all 0.2s;
+    transition: all 0.2s;
+}
+
+
+  </style>
+
+<div id="content-wrapper">
+
+  <div class="container-fluid">
+      <!-- Breadcrumbs-->
+      <!-- <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+              <a href="#">CRUD</a>
+          </li>
+          <li class="breadcrumb-item active">Add</li> -->
+      <!-- </ol> -->
+      <div class="card mb-3">
+          <div class="card-header">
+              <i class="fas fa-table"></i>
+              ที่อยู่สำหรับจัดส่ง 
+          </div>
+          <div class="card-body">
+            <form class="form-horizontal"  method="POST">
+              {% csrf_token %}
+              <div class="form-group">
+                  <div class="form-row">
+                      <div class="col-md-9">
+                          <div class="form-label-group">
+                            <label for="name"><b>ที่อยู่</b></label>
+                            <input type="text" class="form-control" placeholder="กรุณากรอกที่อยู่" name="address" required>
+
+                          </div>
+                      </div>
+                   
+                  </div>
+              </div>
+             
+               
+                    <!-- <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-9">
+                                <div class="form-label-group">
+                                  <label for="phone"><b>เบอร์โทรศัพท์</b></label>
+                                  <input type="text" class="form-control" placeholder="เบอร์โทรศัพท์" name="phone" required>
+ 
+                                </div>
+                            </div>
+                         
+                        </div>
+                    </div> -->
+<!--             
+            <div class="form-group">
+              <div class="form-row">
+                  <div class="col-md-9">
+                      <div class="form-label-group">
+                        <label for="product_detail"><b>รายละเอียด</b></label>
+                            <div class="form-group">
+                            
+                              <textarea class="form-control" rows="4" name="product_detail" placeholder ="รายละเอียดสินค้า"required></textarea >
+                            </div>
+                      </div>
+                  </div>
+               
+              </div>
+          </div> -->
+   
+          <div class="form-group">
+            <div class="form-row">
+                <div class="col-md-9">
+                    <div class="form-label-group">
+                      <label for="exampleSelect1"><b> ตัวเลือกการจัดส่ง</b></label>
+                      <select class="form-control" id="Select" name="delivery_options" required>
+                        {% for c in delivery_options %}
+                        <option value="{{c.id}}">{{ c.delivery_options }}</option>  
+                        {% endfor %}
+                      </select>                      
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="form-group">
+          <div class="form-row">
+              <div class="col-md-9">
+                  <div class="form-label-group">
+                    <label for="exampleSelect1"><b> Payment option</b></label>
+                    <select class="form-control" id="payment_option" name="payment_option" required>
+                    
+                      {% for c in payment_option %}
+                      <option value="{{c.id}}">{{ c.payment_option }}</option>  
+                      {% endfor %}
+                    </select>
+                
+                  </div>
+              </div>
+           
+          </div>
+      </div> -->
+      <b>ตัวเลือกการชำระเงิน</b>
+
+      <div class="d-block my-3">
+       
+        {% for value, name in form.fields.payment_option.choices %}
+        <div class="custom-control custom-radio">
+          <input id="{{ name }}" name="payment_option" value="{{ value }}" type="radio" class="custom-control-input" required>
+          <label class="custom-control-label" for="{{ name }}">{{ name }}</label>
+        </div>
+        {% endfor %}
+      </div>
+
+              
+  
+      <button class="btn btn-primary btn-lg btn-block" type="submit">ยืนยัน</button>
+          </form>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+
+
+
+<!-- 
+  <main >
+    <div class="container wow fadeIn">
+      <h2 class="my-5 h2 text-center">ที่อยู่สำหรับจัดส่ง</h2>
+      <div class="row">
+        <div class="col-md-8 mb-12">
+          <div class="card">
+            <form method="POST" class="card-body">
+              {% csrf_token %}
+
+              <h4>ที่อยู่</h4>
+
+              <div class='hideable_shipping_form'>
+
+                <div class="md-form mb-8">
+                  <input type='text' placeholder='ที่อยู่' id='address' name='address' class='form-control' />
+                  <label for="address" class=""></label>
+                </div>
+
+              </div>
+              <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-9">
+                        <div class="form-label-group">
+                          <label for="exampleSelect1"><h4> ตัวเลือกการจัดส่ง</h4></label>
+                          <select class="form-control" id="Select" name="delivery_options" required>
+                            {% for c in delivery_options %}
+                            <option value="{{c.id}}">{{ c.delivery_options }}</option>  
+                            {% endfor %}
+                          </select>                      
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+              <div class="form-row">
+                  <div class="col-md-9">
+                      <div class="form-label-group">
+                        <label for="exampleSelect1"><h4> สถานะการชำระเงิน</h4></label>
+                        <select class="form-control" id="Select" name="money_status" required>
+                          {% for c in money_status %}
+                          <option value="{{c.id}}">{{ c.money_status }}</option>  
+                          {% endfor %}
+                        </select>
+                    
+                      </div>
+                  </div>
+               
+              </div>
+          </div>
+
+              <h4>Payment option</h4>
+
+              <div class="d-block my-3">
+                {% for value, name in form.fields.payment_option.choices %}
+                <div class="custom-control custom-radio">
+                  <input id="{{ name }}" name="payment_option" value="{{ value }}" type="radio" class="custom-control-input" required>
+                  <label class="custom-control-label" for="{{ name }}">{{ name }}</label>
+                </div>
+                {% endfor %}
+              </div>
+         
+
+              <hr class="mb-4">
+              <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
+
+            </form>
+
+          </div>
+
+        </div>
+
+  
+
+      </div>
+
+    </div>
+  </main>
+  
+    -->
+  
+{% endblock content %}
+
+
+<!-- {% block extra_scripts %}
+<script>
+var hideable_shipping_form = $('.hideable_shipping_form');
+var hideable_billing_form = $('.hideable_billing_form');
+
+var use_default_shipping = document.querySelector("input[name=use_default_shipping]");
+var use_default_billing = document.querySelector("input[name=use_default_billing]");
+
+use_default_shipping.addEventListener('change', function() {
+  if (this.checked) {
+    hideable_shipping_form.hide();
+  } else {
+    hideable_shipping_form.show();
+  }
+})
+
+use_default_billing.addEventListener('change', function() {
+  if (this.checked) {
+    hideable_billing_form.hide();
+  } else {
+    hideable_billing_form.show();
+  }
+})
+
+</script>
+{% endblock extra_scripts %} -->

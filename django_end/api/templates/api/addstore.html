@@ -1,0 +1,128 @@
+{% extends 'api/base.html' %}
+
+{% block content %}
+<style>
+  body {
+  margin: 0;
+  font-family: Nunito,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #000000;
+  text-align: left;
+  }
+  .table {
+  width: 100%;
+  margin-bottom: 1rem;
+  color: #000000;
+  
+  text-align: center;
+}
+</style>
+
+<div id="content-wrapper">
+ 
+  <div class="container-fluid">
+      <!-- Breadcrumbs-->
+      <!-- <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+              <a href="#">CRUD</a>
+          </li>
+          <li class="breadcrumb-item active">Add</li> -->
+      </ol>
+      <div class="card mb-3">
+          <div class="card-header">
+              <i class="fas fa-table"></i>
+              เพิ่มสินค้า
+          </div>
+          <div class="card-body">
+            <form class="form-horizontal" action="/addstore" method="POST"  enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="form-group">
+                  <div class="form-row">
+                      <div class="col-md-9">
+                          <div class="form-label-group">
+                            <label for="store_name"><b>ชื่อสินค้า</b></label>
+                            <input type="text" class="form-control" placeholder="กรุณากรอกชื่อสินค้า" name="store_name"  value="{{ store.store_name }}">
+                           
+                              <!-- <input type="text" class="form-control" name="product_name" placeholder="กรุณากรอกชื่อสินค้า" id="inputFirst" required>  -->
+                          </div>
+                      </div>
+                   
+                  </div>
+              </div>
+
+              <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-9">
+                        <div class="form-label-group">
+                          <label for="store_phone"><b>ชื่อสินค้า</b></label>
+                          <input type="text" class="form-control" placeholder="กรุณากรอกชื่อสินค้า" name="store_phone" value="{{ store.store_phone }}">
+                         
+                            <!-- <input type="text" class="form-control" name="product_name" placeholder="กรุณากรอกชื่อสินค้า" id="inputFirst" required>  -->
+                        </div>
+                    </div>
+                 
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-9">
+                        <div class="form-label-group">
+                          <label for="store_address"><b>ชื่อสินค้า</b></label>
+                          <input type="text" class="form-control" placeholder="กรุณากรอกชื่อสินค้า" name="store_address" value="{{ store.store_address }}">
+                         
+                            <!-- <input type="text" class="form-control" name="product_name" placeholder="กรุณากรอกชื่อสินค้า" id="inputFirst" required>  -->
+                        </div>
+                    </div>
+                 
+                </div>
+            </div>
+              
+         
+          <div class="form-group">
+            <div class="form-row">
+                <div class="col-md-9">
+                    <div class="form-label-group">
+                      <label for="exampleInputFile"><b>เลือกรูปสินค้า</b></label> 
+                      <input type="file" class="form-control-file" id="exampleInputFile" name="store_img" aria-describedby="fileHelp" >
+                    </div>
+                </div>
+             
+            </div>
+        </div>
+       
+      
+
+        <div class="form-group">
+          <div class="form-row">
+              <div class="col-md-9">
+                  <div class="form-label-group">
+                    <label for="lat"><b>lat</b></label>
+                    <input type="text" class="form-control" placeholder="กรุณากรอกจำนวนสินค้า" name="lat" value="{{ store.lat }}">
+                  </div>
+              </div>
+           
+          </div>
+      </div>
+
+      <div class="form-group">
+        <div class="form-row">
+            <div class="col-md-9">
+                <div class="form-label-group">
+                  <label for="lng"><b>lng</b></label>
+                  <input type="text" class="form-control" placeholder="กรุณากรอกจำนวนสินค้า" name="lng" value="{{ store.lng }}">
+                </div>
+            </div>
+         
+        </div>
+    </div>
+              
+  
+              <button class="btn btn-primary btn-block" type="submit">Submit &nbsp;&nbsp;&nbsp;<span></span></button>
+          </form>
+          </div>
+      </div>
+  </div>
+</div>
+{% endblock %}

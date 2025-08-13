@@ -1,0 +1,95 @@
+{% extends 'api/base2.html' %}
+
+{% block content %}
+
+
+<!-- <div id="content-wrapper">
+
+  <div class="container-fluid">
+ 
+      </ol>
+      <div class="card mb-3">
+          <div class="card-header">
+              <i class="fas fa-table"></i>
+              ข้อมูลร้าน
+          </div>
+          <div class="card-body">
+            <form class="form-horizontal" action="/storeUser" method="POST"  enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="form-group">
+                  <div class="form-row">
+                      <div class="col-md-12">
+                          <div class="form-label-group">
+                           <br>
+                           <center> <img src="media/{{store.store_img}}" width="990" height="470"> </center> <br>
+                           <center><label for="stores"><b>ชื่อร้าน : </b>{{store.store_name}}</label> </center> 
+                           <center><label for="stores"><b>เบอร์โทรศัพท์ : </b>{{store.store_phone}}</label> </center> 
+                           <center><label for="stores"><b>ที่อยู่ร้าน : </b>{{store.store_address}}</label> </center>
+                         
+                         
+                          </div>
+                      </div>
+                   
+                  </div>
+              </div>
+              
+          </form> 
+          </div>
+      </div>
+  </div>
+</div> -->
+
+<!-- ิ <section class="section-margin"> -->
+    <body>
+    <div class="container">
+      <br>
+        <div class="section-intro pb-5px">
+          
+            <h2>  <span class="section-intro__style">ข้อมูลร้าน</span></h2>
+          </div>
+
+        <!-- Outer Row -->
+        <div class="row justify-content-center">
+
+            <div class="col-xl-10 col-lg-12 col-md-9">
+
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <!-- Nested Row within Card Body -->
+                        <div class="row">
+                            <div class="col-lg-6 d-none d-lg-block bg-login-image">
+                              <img src="media/{{store.store_img}}" width="470" height="470">  <br></div>
+                            <div class="col-lg-6">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-4"><b>ชื่อร้าน : </b>{{store.store_name}}</h1>
+                                        <!-- <h1 class="h4 text-gray-900 mb-4" for="stores"><b>ชื่อร้าน : </b>{{store.store_name}}</h1>  <br> -->
+                                        <label for="stores"><b>เบอร์โทรศัพท์ : </b>{{store.store_phone}}</label>  <br>
+                                        <!-- <label for="stores"><b>เวลาเปิด : </b>{{store.store_phone}}</label>  <br>
+                                        <label for="stores"><b>เวลาปิด : </b>{{store.store_phone}}</label>  <br> -->
+                                        <label for="stores"><b>ที่อยู่ร้าน : </b>{{store.store_address}}</label> <br>
+                                        <label for="stores" style="padding: 8px; float: right;  color: rgb(230, 15, 15);"><b> อื่น ๆ : </b>{{store.store_detail}}</label> 
+                                       
+                                    </div>
+                                    <!-- <center> <img src="media/{{store.store_img}}" width="200" height="200"> </center> <br> -->
+                                    <!-- <center><label for="stores"><b>ชื่อร้าน : </b>{{store.store_name}}</label> </center> 
+                                    <center><label for="stores"><b>เบอร์โทรศัพท์ : </b>{{store.store_phone}}</label> </center> 
+                                    <center><label for="stores"><b>ที่อยู่ร้าน : </b>{{store.store_address}}</label> </center>
+                                    -->
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</body>
+
+<!-- </section>  -->
+
+{% endblock %}

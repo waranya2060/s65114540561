@@ -1,0 +1,79 @@
+{% extends 'api/base2.html' %}
+{% block content %}
+
+<style>
+
+.section-margin {
+    margin: 35px 0;
+}
+</style>
+
+  <!-- ================ trending product section start ================= -->  
+  <section class="section-margin">
+    <div class="container">
+      <div class="section-intro pb-60px">
+        <!-- <p>Popular Item in the market</p> -->
+        <h2> <span class="section-intro__style">ช่างรับเหมาก่อสร้าง</span></h2>
+      </div>
+      <div class="row">
+
+     {% csrf_token %} 
+     <!-- <div class="row"> -->
+     {% for mechanic in mechanics %}
+
+        <div class="col-md-6 col-lg-4 col-xl-3">
+          <div class="card text-center card-product">
+            <div class="card-product__img">
+            <img class="card-img" src="/media/{{mechanic.avatar}}" style="height: 250px;"  href="/">
+              <ul class="card-product__imgOverlay">
+                  <li>  <a class="btn btn-sm" href="/mechanicDetailUser/{{mechanic.id}}" style="padding: 8px; float: right; background-color: rgb(116, 89, 139); color: rgb(255, 255, 255);"> <span></span>รายละเอียดช่าง</a></li>
+                  <!-- <li>  <a class="btn btn-sm btn-primary" href="/mechanicDetailUser/{{mechanic.id}}"> <span></span></a></li> -->
+                <!-- <li ><button href="/mechanicDetailUser/{{mechanic.id}}" ><i class="ti-search" href="/mechanicDetailUser/{{mechanic.id}}"></i> </button></li>
+                <li><button><i class="ti-shopping-cart"></i></button></li> -->
+                <!-- <li><button><i class="ti-heart"></i></button></li> -->
+              </ul>
+            </div>
+            <div class="card-body">
+              <p>{{ mechanic.mechanic_type }}</p>
+              <h4 class="card-product__title"><a href="/mechanicDetailUser/{{mechanic.id}}">{{mechanic.mechanic_fname}}  {{mechanic.mechanic_lname}}</a></h4>
+              <!-- <p class="card-product__price">$150.00</p> -->
+            </div>
+          </div>
+        </div>
+
+        {% endfor %}
+    <!-- </div> -->
+    <div class="table-responsive">
+    {% if mechanics.has_other_pages %}
+                  <ul class="pagination">
+                    {% if mechanics.has_previous %}
+                      <li><a class="page-link" href="?page={{ mechanics.previous_page_number }}">&laquo;  Previous</a></li>
+                      <li><a class="page-link" href="?page={{ mechanics.previous_page_number }}">{{ mechanics.previous_page_number }} </a></li>
+                    {% else %}
+                      <li class="disabled page-link"><span>&laquo;Previous</span></li>
+                    {% endif %}
+                      <!--   หน้าปัจจุบัน -->
+                    <li class="page-item active">
+                      <span class="page-link">
+                          <span class="current" >
+                              {{ mechanics.number }} 
+                            </span>
+                       
+                      </span>
+                    </li>
+                        <!-- หน้าถัดไป -->
+                    {% if mechanics.has_next %}
+                      
+                      <li><a class="page-link"  href="?page={{ mechanics.next_page_number }}">Next &raquo; </a></li>
+                    {% else %}
+                      <li class="disabled page-link"><span>Next &raquo;</span></li>
+                    {% endif %}
+                  </ul>
+                {% endif %}
+              </div>
+    
+      </div>
+    </div>
+  </section>
+
+{% endblock %}

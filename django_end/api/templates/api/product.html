@@ -1,0 +1,155 @@
+{% extends 'api/base.html' %}
+
+{% block content %}
+
+<style>
+    body {
+    margin: 0;
+    font-family: Nunito,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #000000;
+    text-align: left;
+    }
+    .table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #000000;
+    
+    text-align: center;
+}
+</style>
+<div id="content-wrapper">
+
+  <div class="container-fluid">
+      <!-- Breadcrumbs-->
+      <!-- <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+              <a href="#">Dashboard</a>
+          </li>
+          <li class="breadcrumb-item active">CRUD</li>
+      </ol> -->
+      
+      <div class="card mb-3">
+          <div class="card-header">
+              <i class="fas fa-table"></i>
+              รายการสินค้า
+
+              <a  class="btn btn-sm btn-success" href="/addproduct" style="padding: 8px; float: right; background-color: green; color: white;">ADD</a>
+          </div>
+
+          <nav class="navbar navbar-light bg-light justify-content-between">
+            <a class="navbar-brand"></a>
+  
+              <!-- <form class="form-inline" action="/product/" style="font:right;" method="POST">
+              {% csrf_token %}
+              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="name" value="{{ search_name }}">
+              <button class="btn btn-outline-success my-2 my-sm-0"name="search" type="submit">Search</button>
+            </form>  -->
+          </nav>
+        
+          <div class="card-body">
+              <!-- {% for message in messages %}
+                  <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+                      {{ message }}
+                  </div> 
+              {% endfor %} -->
+               <div class="table-responsive">
+                  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" align="center">
+                      <thead>
+                      <tr>
+                        <th>ID</th>
+                          <th>ชื่อสินค้า</th>
+                          <th>รูป</th>
+                          <th>รายละเอียด</th>
+                          <th>ราคา</th>
+                          <th>หมวดหมู่</th>
+                        
+                          
+                          <th>จำนวนสินค้า</th>
+                          <th>สถานะสินค้า</th>
+                          <!-- <th>Add Stock</th>  -->
+                          <th>แก้ไข</th> 
+                          <th>ลบ</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                       
+                      {% for product in products %}
+                    
+                          <tr>
+                            <td>{{ product.id }}</td>
+                              <td>{{ product.name }}</td>
+                              <td><img src="/media/{{product.product_img}}" style="height: 45px; width: 45px;"></td>
+                              <td>{{ product.product_detail }}</td>
+                              <td>{{ product.price }}</td>
+                              <td>{{ product.product_type }}</td>
+                              
+                              
+                              <td>{{ product.quantity }}</td>
+                              <td>   
+                                {% if product.quantity > 0 %}
+                                   คงเหลือ
+                                  {% else %}
+                                  หมดแล้ว
+                                  {% endif %}
+                                  
+                                </td> 
+
+                              <!-- <td><a href="/add_to_stock/{{product.id}}"
+                                ><input
+                                  type="submit"
+                                  value="Add Stock"
+                                  class="btn btn-secondary btn"
+                                  type="button"
+                              /></a></td> -->
+                              <!-- <td>{{product.product_status}}</td> -->
+                              <!-- <td>{{ i.created_at  |date:"d-m-Y H:i:s" }}</td> -->
+                              <td>                                   
+                                  <a class="btn btn-sm btn-warning" href="/editproduct/{{product.id}}"> <span class="fa fa-edit"></span> Edit</a>
+                                  
+                              </td>
+                              <td><a class="btn btn-sm btn-danger" href="/deleteproduct/{{product.id}}"><span class="fa fa-trash"></span> Delete</a></td>
+                          </tr>
+                          
+                      {% endfor %}
+                      </tbody>
+                  
+                    </table>
+                    {% if products.has_other_pages %}
+                    <ul class="pagination">
+                      {% if products.has_previous %}
+                        <li><a class="page-link" href="?page={{ products.previous_page_number }}">&laquo;  Previous</a></li>
+                        <li><a class="page-link" href="?page={{ products.previous_page_number }}">{{ products.previous_page_number }} </a></li>
+                      {% else %}
+                        <li class="disabled page-link"><span>&laquo;Previous</span></li>
+                      {% endif %}
+                        <!--   หน้าปัจจุบัน -->
+                      <li class="page-item active">
+                        <span class="page-link">
+                            <span class="current" >
+                                {{ products.number }} 
+                              </span>
+                         
+                        </span>
+                      </li>
+                          <!-- หน้าถัดไป -->
+                      {% if products.has_next %}
+                        
+                        <li><a class="page-link"  href="?page={{ products.next_page_number }}">Next &raquo; </a></li>
+                      {% else %}
+                        <li class="disabled page-link"><span>Next &raquo;</span></li>
+                      {% endif %}
+                    </ul>
+                  {% endif %}
+                    </div>
+                    
+                    </div>
+
+                </div>
+                </div>
+                </div>
+                </div>
+             
+                {% endblock %}

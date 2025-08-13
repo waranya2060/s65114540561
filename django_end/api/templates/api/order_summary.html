@@ -1,0 +1,86 @@
+{% extends "api/base2.html" %}
+
+{% block content %}
+  <main>
+    <div class="container">
+
+    <div class="table-responsive text-nowrap">
+        <br>
+    <h2>ตระกร้าสินค้า</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">ชื่อสินค้า</th>
+            <th scope="col">ราคา</th>
+            <th scope="col">จำนวน</th>
+            <th scope="col">ราคาสินค้าทั้งหมด</th>
+            <th scope="col">ลบสินค้า</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for order_product in object.products.all %}
+        <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ order_product.product.name }}</td>
+            <td>{{ order_product.product.price }}</td>
+            <td>
+                <a href="{%  url 'remove-single-item-from-cart' order_product.product.id %}"><i class="fas fa-minus mr-2"></i></a>
+                {{ order_product.quantity }}
+                <a href="{% url 'add-to-cart' order_product.product.id %}"><i class="fas fa-plus ml-2"></i></a>
+            </td>
+            <!-- <td>{{order_product.product.quantity}}</td>
+            <td>{{order_product.get_quantity}}</td> -->
+            <td>     
+                    {{ order_product.get_total_product_price }} บาท
+                </td>
+            <!-- ลบสินค้า -->
+            <td>
+
+                <a  class="btn btn-sm btn-danger" href="{% url 'remove-from-cart' order_product.product.id  %}"><span class="fa fa-trash" ></span> Delete</a>
+            </td>
+           
+           
+        </tr>
+        {% empty %}
+        <tr>
+            <!-- <td colspan='5'>Your cart is empty</td> -->
+            <td colspan='5'>คุณไม่มีสินค้าในตะกร้า</td>  
+        </tr>
+        <tr>
+            <td colspan="5">
+            <a class='btn btn-primary float-right' href='/'>กลับไปหน้าสินค้า</a>
+            </td>
+            <td></td>
+        </tr>
+
+        {% endfor %}
+
+        
+        {% if object.get_total %}
+        
+        <tr>
+            <td colspan="4"><b>ราคารวม</b></td>
+            <td><b>{{ object.get_total }} บาท</b></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td colspan="5">
+            <a class='btn btn-warning float-right ml-2' href='/checkout/'>ดำเนินการชำระเงิน</a>
+            <a class='btn btn-primary float-right' href='/'>กลับไปหน้าสินค้า</a>
+            </td>
+            <td></td>
+        </tr>
+        
+        {% endif %}
+        </tbody>
+    </table>
+
+    </div>
+
+    </div>
+  </main>
+
+{% endblock content %}
+
+

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% load static %}
+<head>
+  
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>3ก.วัสดุ</title>
+  <link rel="short icon" href="{%static 'api/img/Samgo.png'%}">
+	<!-- <link rel="icon" href="{% static 'api/img/drawing.png'%}" type="image/png"> -->
+  <link rel="stylesheet" href="{% static 'api/fend/vendors/bootstrap/bootstrap.min.css'%}">
+  <link rel="stylesheet" href="{% static 'api/fend/vendors/fontawesome/css/all.min.css'%}">
+	<link rel="stylesheet" href="{% static 'api/fend/vendors/themify-icons/themify-icons.css'%}">
+  <link rel="stylesheet" href="{% static 'api/fend/vendors/nice-select/nice-select.css'%}">
+  <link rel="stylesheet" href="{% static 'api/fend/vendors/owl-carousel/owl.theme.default.min.css'%}">
+  <link rel="stylesheet" href="{% static 'api/fend/vendors/owl-carousel/owl.carousel.min.css'%}">
+
+  <link rel="stylesheet" href="{% static 'api/fend/css/style.css'%}">
+  <style> 
+		/* Set the border color */ 
+		
+		/* .custom-toggler.navbar-toggler { 
+			border-color: lightgreen; 
+		}  */
+		/* Setting the stroke to green using rgb values (0, 128, 0) */ 
+/* 		
+		.custom-toggler .navbar-toggler-icon { 
+			background-image: url( 
+"data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0, 128, 0, 0.8)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E"); 
+		}  */
+
+
+
+    table{
+            border-collapse: collapse;
+            border: none;
+        }
+        td{
+            padding: 10px;
+        }
+        form{
+            margin-bottom: 0;
+        }
+	</style> 
+</head>
+<style>
+
+fa-1x {
+font-size: 1.5rem;
+}
+/* .navbar-toggler.toggler-example {
+cursor: pointer;
+} */
+.dark-blue-text {
+color: #0A38F5;
+}
+.dark-pink-text {
+color: #AC003A;
+}
+.dark-amber-text {
+color: #ff6f00;
+}
+.dark-teal-text {
+color: #004d40;
+}
+.red {
+    background-color: #f44336!important;
+}
+</style>
+<body>
+   
+  <!--================ Start Header Menu Area =================-->
+
+  {% include 'api/menubar.html' %} 
+
+ 
+	<!--================ End Header Menu Area =================-->
+
+    {% block content %}
+    {% endblock %}
+    <!-- <footer class="bg-light text-center text-lg-start">
+  
+      <div class="container p-4">
+
+        <div class="row">
+
+         
+        </div> 
+  
+      </div>
+    
+    </footer> -->
+
+    
+
+  <script src="{% static 'api/fend/vendors/jquery/jquery-3.2.1.min.js'%}"></script>
+  <script src="{% static 'api/fend/vendors/bootstrap/bootstrap.bundle.min.js'%}"></script>
+  <script src="{% static 'api/fend/vendors/skrollr.min.js'%}"></script>
+  <script src="{% static 'api/fend/vendors/owl-carousel/owl.carousel.min.js'%}"></script>
+  <script src="{% static 'api/fend/vendors/nice-select/jquery.nice-select.min.js'%}"></script>
+  <script src="{% static 'api/fend/vendors/jquery.ajaxchimp.min.js'%}"></script>
+  <script src="{% static 'api/fend/vendors/mail-script.js'%}"></script>
+  <script src="{% static 'api/fend/js/main.js'%}"></script>
+  <!-- <script src="{% static 'api/fend/vendors/bootstrap/bootstrap.min.css'%}"></script> -->
+
+	<!-- <script src= 
+"https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"> 
+</script> 
+	<script src= 
+"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"> 
+</script>  -->
+
+
+  
+</body>
+
+</html>

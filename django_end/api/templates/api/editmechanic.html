@@ -1,0 +1,189 @@
+{% extends 'api/base.html' %}
+
+{% block content %}
+<style>
+  body {
+  margin: 0;
+  font-family: Nunito,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #000000;
+  text-align: left;
+  }
+  .table {
+  width: 100%;
+  margin-bottom: 1rem;
+  color: #000000;
+  
+  text-align: center;
+}
+
+.form-control {
+    display: block;
+    width: 100%;
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #38383a;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #d1d3e2;
+    border-radius: .35rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+</style>
+
+<div id="content-wrapper">
+
+  <div class="container-fluid">
+      <!-- Breadcrumbs-->
+      <!-- <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+              <a href="#">CRUD</a>
+          </li>
+          <li class="breadcrumb-item active">Add</li>
+      </ol> -->
+      <div class="card mb-3">
+          <div class="card-header">
+              <i class="fas fa-table"></i>
+              แก้ไขข้อมูลช่าง
+              <a  class="btn btn-sm btn-success" href="/mechanic" style="padding: 8px; float: right; background-color: rgb(53, 122, 155); color: white;">Back</a>
+          </div>
+          <div class="card-body">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+                {{ message }}
+            </div> 
+        {% endfor %}
+            <form class="form-horizontal" action="/editmechanic/{{ mechanic.id }}/" method="POST"  enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-9">
+                        <div class="form-label-group">
+                          <label for="exampleInputFile"><b>เลือกรูปโปรไฟล์ช่าง</b></label> 
+                          <img src="/media/{{mechanic.avatar}}" class="img-rounded" alt="img" width="250" height="180">
+                          <input type="file" class="form-control-file" name="avatar" id="exampleInputFile" aria-describedby="fileHelp">
+                        </div>
+                    </div>
+                 
+                </div>
+            </div>
+              <div class="form-group">
+                  <div class="form-row">
+                      <div class="col-md-9">
+                          <div class="form-label-group">
+                            <label for="mechanic_fname"><b>ชื่อ</b></label>
+                            <input type="text" class="form-control" placeholder="กรุณากรอกชื่อ" name="mechanic_fname" value="{{ mechanic.mechanic_fname }}"  required>
+                          </div>
+                      </div>
+                   
+                  </div>
+              </div>
+              <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-9">
+                        <div class="form-label-group">
+                          <label for="mechanic_lname"><b>นามสกุล</b></label>
+                          <input type="text" class="form-control" placeholder="กรุณากรอกนามสกุล" name="mechanic_lname" value="{{ mechanic.mechanic_lname }}" required>
+                          <!-- <label for="product_price"><b>ราคา(บาท)</b></label>
+                          <input type="text" placeholder="กรุณากรอกราคา(บาท)" name="product_price" value="{{ product.product_price }}" required> -->
+                            <!-- <input type="text" class="form-control" name="product_name" placeholder="กรุณากรอกชื่อสินค้า" id="inputFirst" required>  -->
+                        </div>
+                    </div>
+                 
+                </div>
+            </div>
+            <div class="form-group">
+              <div class="form-row">
+                  <div class="col-md-9">
+                      <div class="form-label-group">
+                        <label for="mechanic_phone"><b>เบอร์โทรศัพท์</b></label>
+                        <input type="text" class="form-control" placeholder="กรุณากรอกเบอร์โทรศัพท์" name="mechanic_phone" value="{{ mechanic.mechanic_phone }}" required>
+                        <!-- <label for="product_price"><b>ราคา(บาท)</b></label>
+                        <input type="text" placeholder="กรุณากรอกราคา(บาท)" name="product_price" value="{{ product.product_price }}" required> -->
+                          <!-- <input type="text" class="form-control" name="product_name" placeholder="กรุณากรอกชื่อสินค้า" id="inputFirst" required>  -->
+                      </div>
+                  </div>
+               
+              </div>
+          </div>
+
+          <div class="form-group">
+            <div class="form-row">
+                <div class="col-md-9">
+                    <div class="form-label-group">
+                      <label for="mechanic_email"><b>อีเมล</b></label>
+                      <input type="text" class="form-control" placeholder="กรุณากรอกอีเมล" name="mechanic_email" value="{{ mechanic.mechanic_email }}" required>
+                      <!-- <label for="product_price"><b>ราคา(บาท)</b></label>
+                      <input type="text" placeholder="กรุณากรอกราคา(บาท)" name="product_price" value="{{ product.product_price }}" required> -->
+                        <!-- <input type="text" class="form-control" name="product_name" placeholder="กรุณากรอกชื่อสินค้า" id="inputFirst" required>  -->
+                    </div>
+                </div>
+             
+            </div>
+        </div>
+            <div class="form-group">
+              <div class="form-row">
+                  <div class="col-md-9">
+                      <div class="form-label-group">
+                        <label for="mechanic_detail"><b>รายละเอียดงานของช่าง</b></label>
+                            <!-- <div class="form-group"> -->
+                              <!-- <input type="text" class="form-control" rows="4"  placeholder="กรุณากรอกราคา" name="product_detail" value="{{ product.product_detail }}" required> -->
+                              <textarea type="text" class="form-control" rows="4"  placeholder="รายละเอียดงานของช่าง" name="mechanic_detail" value="{{ mechanic.mechanic_detail }}" required>{{ mechanic.mechanic_detail }}</textarea>
+                              <!-- <textarea type="text" class="form-control" rows="4" name="product_detail" placeholder ="รายละเอียดสินค้า" value="{{ product.product_detail }}" required></textarea > -->
+                            <!-- </div> -->
+                      </div>
+                  </div>
+               
+              </div>
+          </div>
+
+          <div class="form-group">
+            <div class="form-row">
+                <div class="col-md-9">
+                    <div class="form-label-group">
+                      <label for="exampleInputFile"><b>เลือกรูปงานของช่าง</b></label> 
+                      <img src="/media/{{mechanic.mechanic_img}}" class="img-rounded" alt="img" width="250" height="180">
+                      <input type="file" class="form-control-file" name="mechanic_img" id="exampleInputFile" aria-describedby="fileHelp">
+                    </div>
+                </div>
+             
+            </div>
+        </div>
+         
+        <div class="form-group">
+          <div class="form-row">
+              <div class="col-md-9">
+                  <div class="form-label-group">
+                    <label for="exampleSelect1"><b>ประเภทช่าง</b></label>
+                    <select class="form-control" id="Select" name="mechanic_type" required>
+        
+                      {% for c in mechanic_types %}
+                      {% if c == mechanic.mechanic_type %}
+                      <option value="{{c.id}}" selected>{{ c.mechanic_type }}</option>  
+                      {% else %}
+                      <option value="{{c.id}}">{{ c.mechanic_type }}</option> 
+                      {% endif %} 
+                      {% endfor %}
+                    </select>
+                
+                  </div>
+              </div>
+           
+          </div>
+      </div>
+  
+      
+              
+  
+              <button class="btn btn-primary btn-block" type="submit">อัปเดต &nbsp;&nbsp;&nbsp;<span></span></button>
+          </form>
+          </div>
+      </div>
+  </div>
+</div>
+{% endblock %}

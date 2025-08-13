@@ -1,0 +1,73 @@
+{% extends 'api/base2.html' %}
+{% load static %}
+{% block content %}
+<main class="container my-4">
+	<!-- Featured Products -->
+	<h3 class="my-4 border-bottom pb-1">{{product.name}}</h3>
+	<div class="row">
+		<!-- Images -->
+		<div class="col-md-4">
+            <img src="/media/{{product.product_img}}" class="card-img-top" >
+			<!-- <img id="zoom_01" data-zoom-image="/media/{{data.productattribute_set.first.image}}" src="/media/{{data.productattribute_set.first.image}}" class="card-img-top" alt="{{data.title}}"> -->
+		</div>
+		<div class="col-md-8">
+			<!-- <h4>{{product.name}}</h4>
+			<hr/> -->
+			<table class="table table-bordered">
+				<tr>
+					<th>หมวดหมู่สินค้า</th>
+					<th>{{product.product_type}}</th>
+				</tr>
+				<tr>
+					<th>ราคา</th>
+					<th> {{product.price}} บาท</th>
+				</tr>
+				
+				<tr>
+					<th>รายละเอียดสินค้า</th>
+                    <th>{{product.product_detail}}</th>
+					<!-- <td>
+						{% for p_attr in data.productattribute_set.all %}
+						<button class="btn btn-outline-secondary btn-sm">{{p_attr.size.title}}</button>
+						{% endfor %}
+					</td> -->
+				</tr>
+
+               
+			</table>
+			<hr/>
+			<!-- <div class="input-group my-3" style="width:30%;">
+			  <input type="number" class="form-control" />
+			  <div class="input-group-append">
+			    <button class="btn btn-primary btn-sm" type="button" id="button-addon2"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+			  </div>
+			</div> -->
+
+            <!-- <form class="d-flex justify-content-left">
+                
+                <input type="number" value="1" aria-label="Search" class="form-control" style="width: 100px">
+                <button class="btn btn-primary btn-md my-0 p" type="submit">Add to cart
+                  <i class="fas fa-shopping-cart ml-1"></i>
+                </button>
+				<button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
+				<a href="{{ object.get_remove_from_cart_url }}" class="btn btn-danger btn-md my-0 p">
+					Remove from cart
+				  </a>
+  
+              </form> -->
+
+			  <a  href="{% url 'add-to-cart' product.id %}" class="btn btn-primary btn-md my-0 p">เพิ่มในตะกร้าสินค้า
+				<i class="fas fa-shopping-cart ml-1"></i>
+			</a>
+
+			
+		</div>
+	</div>
+	<hr />
+	
+		<!-- Reviews -->
+		
+	</div>
+	<!-- Related Products -->
+	
+{% endblock %}

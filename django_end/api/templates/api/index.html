@@ -1,0 +1,115 @@
+{% extends 'api/base2.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+
+
+.hero-banner::before {
+    width: 43%;
+}
+.hero-banner::before {
+    content: "";
+    display: block;
+    /* width: 5%; */
+    /* height: 100%; */
+    background: #a0d5db;
+    position: absolute;
+    /* top: 0;
+    left: 0; */
+}
+
+</style>
+
+<section class="hero-banner">
+    <div class="container">
+      <div class="row no-gutters align-items-center pt-60px">
+        <div class="col-5 d-none d-sm-block">
+          <div class="hero-banner__img">
+            <img class="img-fluid" src="{%static 'api/img/1.jpg'%}" alt="">
+          </div>
+        </div>
+        <div class="col-sm-7 col-lg-6 offset-lg-1 pl-4 pl-md-5 pl-lg-0">
+          <div class="hero-banner__content">
+              
+            <h4>3 ก. วัสดุก่อสร้าง</h4>
+            <!-- <center><h1>Samgo Wassadu Kosrang</h1></center> -->
+            <h1>Samgo Wassadu Kosrang</h1>
+            <p>ขายเสาหล่อ ท่อปูน อิฐบล็อค หิน ปูน ทราย ดิน
+            
+                รับสร้างบ้านบนที่ดินของท่าน</p>
+            <!-- <a class="button button-hero" href="#">Browse Now</a> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-margin">
+    <div class="container">
+      <div class="section-intro pb-60px">
+        <!-- <p>Popular Item in the market</p> -->
+        <h2> <span class="section-intro__style">สินค้าทั้งหมด</span></h2>
+      </div>
+      <div class="row">
+
+     {% csrf_token %} 
+     <!-- <div class="row"> -->
+     {% for i in products %}
+
+     <div class="col-md-6 col-lg-4 col-xl-3">
+        <div class="card text-center card-product">
+          <div class="card-product__img">
+          <img class="card-img" src="/media/{{i.product_img}}" style="height: 180px;"  href="/">
+            <ul class="card-product__imgOverlay">
+                <li>  <a class="btn btn-sm" href="/productDetail/{{i.id}}" style="padding: 8px; float: right; background-color: rgb(116, 89, 139); color: rgb(255, 255, 255);"> <span></span>รายละเอียดสินค้า</a></li>
+                <!-- <li>  <a class="btn btn-sm btn-primary" href="/mechanicDetailUser/{{mechanic.id}}"> <span></span></a></li> -->
+              <!-- <li ><button href="/mechanicDetailUser/{{mechanic.id}}" ><i class="ti-search" href="/mechanicDetailUser/{{mechanic.id}}"></i> </button></li>
+              <li><button><i class="ti-shopping-cart"></i></button></li> -->
+              <!-- <li><button><i class="ti-heart"></i></button></li> -->
+            </ul>
+          </div>
+          <div class="card-body">
+            <!-- <p>ราคา : {{ product.product_price }} บาท</p> -->
+            <h4 class="card-product__title"><a href="/productDetail/{{i.id}}">{{i.name}}</a></h4>
+            <p class="card-product__price">ราคา : {{i.price}}  บาท</p>
+          </div>
+        </div>
+      </div>
+
+        {% endfor %}
+    <!-- </div> -->
+    <div class="table-responsive">
+    {% if products.has_other_pages %}
+                    <ul class="pagination">
+                      {% if products.has_previous %}
+                        <li><a class="page-link" href="?page={{ products.previous_page_number }}">&laquo;  Previous</a></li>
+                        <li><a class="page-link" href="?page={{ products.previous_page_number }}">{{ products.previous_page_number }} </a></li>
+                      {% else %}
+                        <li class="disabled page-link"><span>&laquo;Previous</span></li>
+                      {% endif %}
+                        <!--   หน้าปัจจุบัน -->
+                      <li class="page-item active">
+                        <span class="page-link">
+                            <span class="current" >
+                                {{ products.number }} 
+                              </span>
+                         
+                        </span>
+                      </li>
+                          <!-- หน้าถัดไป -->
+                      {% if products.has_next %}
+                        
+                        <li><a class="page-link"  href="?page={{ products.next_page_number }}">Next &raquo; </a></li>
+                      {% else %}
+                        <li class="disabled page-link"><span>Next &raquo;</span></li>
+                      {% endif %}
+                    </ul>
+                  {% endif %}
+                </div>
+      </div>
+    </div>
+  </section>
+
+  
+{% endblock %}

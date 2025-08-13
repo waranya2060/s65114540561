@@ -1,0 +1,181 @@
+{% load cart_template_tags %}
+
+<header class="header_area">
+  <div class="main_menu">
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="container">
+        <a class="navbar-brand logo_h" href="/index"><img src="" alt=""></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
+          <ul class="nav navbar-nav menu_nav ml-auto mr-auto">
+    
+    
+    <li class="nav-item active"><a class="nav-link" href="/index">หน้าแรก</a></li>
+    <li class="nav-item submenu dropdown">
+      <a href="/showProductAll" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+        aria-expanded="false">วัสดุก่อสร้าง</a>
+     
+      <ul class="dropdown-menu">
+        <!-- <li class="nav-item"><a class="nav-link" href="/showProductAll">ทั้งหมด</a></li> -->
+        
+           {% for cat in product_type %}
+
+         
+        <li class="nav-item"><a class="nav-link" href="/productTypeUser/{{cat.id}}">{{cat.product_type}}</a></li>
+        {% endfor %}
+          
+        <!-- <li class="nav-item"><a class="nav-link" href="single-product.html">Product Details</a></li>
+        <li class="nav-item"><a class="nav-link" href="checkout.html">Product Checkout</a></li>
+        <li class="nav-item"><a class="nav-link" href="confirmation.html">Confirmation</a></li>
+        <li class="nav-item"><a class="nav-link" href="cart.html">Shopping Cart</a></li> -->
+      </ul>
+</li>
+  <li class="nav-item"><a class="nav-link" href="/mechanicUser">ช่างรับเหมาก่อสร้าง</a></li>
+    <li class="nav-item "><a class="nav-link" href="/storeUser">ข้อมูลร้าน</a></li>
+    
+    <form class="form-inline my-2 my-lg-0" action="/search">
+      <div class="input-group">
+      <input name="q" type="text" class="form-control" placeholder="search" />
+      <div class="input-group-append">
+        <button class="btn btn-dark" type="submit" id="button-addon2">Search</button>
+      </div>
+    </div>
+    </form>
+  </ul>
+     
+<ul class="nav navbar-nav menu_nav ">
+
+
+     
+
+    {% csrf_token %}
+    {% if user.is_authenticated %}
+    <li class="nav-item">
+      <a href="{% url 'order-summary' %}" class="nav-link waves-effect">
+        <span class="badge red z-depth-1 mr-1"> {{ user | cart_item_count }}  </span>
+        <i class="fas fa-shopping-cart"></i>
+        <span class="clearfix d-none d-sm-inline-block"> Cart </span>
+      </a>
+    </li>
+
+  
+
+    <!-- <li class="nav-item">
+      <a class="nav-link" href="/cart">
+        
+          <span class="badge red z-depth-1 mr-1">{{ cart_item_count }} </span>
+          <i class="fas fa fa-shopping-cart"></i>
+        </a>
+         
+  </li>  -->
+  {% comment %} 
+    {% if request.user.is_superuser %}
+   
+    <li class="nav-item submenu dropdown">
+      <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+      aria-expanded="false">
+      {{user.username}} 
+
+      <img class="img-profile rounded-circle"
+      src="{%static 'api/img/undraw_profile.svg'%}" style="height: 25px;" width="25px">
+  </a>   
+   {% else %} 
+   {% endcomment %} 
+
+    <li class="nav-item submenu dropdown">
+      <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+      aria-expanded="false">
+      {{user.first_name}}  {{user.last_name}} 
+      <!-- user.avatar.url -->
+     
+      <!-- <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{adminn.username}}  </span> -->
+      <img class="img-profile rounded-circle"
+      src="{{user.avatar.url}} " style="height: 25px;" width="25px">
+  </a>    
+
+
+ 
+ 
+
+ 
+          <ul class="dropdown-menu">
+            <li class="nav-item"><a class="nav-link" href="/order">
+              <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+              ประวัติการซื้อ
+          </a></li>
+            <li class="nav-item"><a class="nav-link" href="/profile">
+              <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+              ข้อมูลผู้ใช้งาน
+          </a></li>
+         
+          {% if user.is_superuser %}
+
+
+
+          <li class="nav-item">  <a class="nav-link" href="/store" >
+            <i class="fas fa-tachometer-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+              จัดการข้อมูล
+        </a></li>
+          {% endif %}
+            <li class="nav-item">  <a class="nav-link" href="/logout" >
+              <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+              ออกจากระบบ
+          </a></li>
+            <!-- <li class="nav-item"><a class="nav-link" href="tracking-order.html">Tracking</a></li> -->
+          </ul>
+     </li>
+     {% else %}
+     <li class="nav-item "><a  href="/login">เข้าสู่ระบบ |</a> <a  href="/register">สมัครสมาชิก</a></li>
+     <!-- <a class="nav-link" href="/index">หน้าแรก</a> -->
+
+    <!-- <li class="nav-item submenu dropdown">
+      <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+        aria-expanded="false">เข้าสู่ระบบ</a>
+      <ul class="dropdown-menu">
+        <li class="nav-item"><a class="nav-link" href="/login">เข้าสู่ระบบ</a></li>
+        <li class="nav-item"><a class="nav-link" href="/register">สมัครสมาชิก</a></li>
+      </ul> -->
+ </li>
+    
+    <!-- <li class="nav-item"><button  href="/cart"><i class="ti-search" href="/cart"></i></button></li> -->
+    <!-- <li class="nav-item"><button><i class="ti-shopping-cart"></i><span class="nav-shop__circle">3</span></button> </li>
+    <li class="nav-item"><a class="button button-header" href="#">Buy Now</a></li> -->
+
+
+  
+
+
+ {% endif %}
+  </ul>
+
+  
+
+  
+</div>
+</div>
+</nav>
+
+</div>
+
+<div class="mt-2 pt-2">
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+  {{ message }}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{% endfor %}
+{% endif %}
+</div>
+
+
+
+</header>
+  <!-- Navbar -->

@@ -1,0 +1,21 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django = "==2.2.7"
+openpyxl = "*"
+django_dbml ="*"
+
+[dev-packages]
+
+[scripts]
+server ="python manage.py runserver"
+rmdb = "rm -rf db.sqlite3 api/migrations"
+createdb = "bash -c 'python manage.py makemigrations api ; python manage.py migrate'"
+loaddb = "python manage.py loaddb"
+super = "python manage.py createsuperuser"
+
+[requires]
+python_version = "3.8"

@@ -1,0 +1,138 @@
+{% extends 'api/base2.html' %}
+
+{% block content %}
+
+<style>
+    body {
+    /* margin: 0; */
+    font-family: Nunito,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    /* font-size: 1rem; */
+    /* font-weight: 400; */
+    line-height: 1.5;
+    color: #000000;
+    text-align: left;
+    }
+    .table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #000000;
+    
+    text-align: center;
+}
+</style>
+<div id="content-wrapper">
+
+  <div class="container-fluid">
+      <!-- Breadcrumbs-->
+      <!-- <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+              <a href="#">Dashboard</a>
+          </li>
+          <li class="breadcrumb-item active">CRUD</li>
+      </ol> -->
+      <div class="card mb-3">
+          <div class="card-header">
+              <i class="fas fa-table"></i>
+              ประวัติการสั่งซื้อ
+              <!-- <a  class="btn btn-sm btn-success" href="/order" style="padding: 8px; float: right; background-color: green; color: white;">ADD</a> -->
+          </div>
+          <div class="card-body">
+              <div class="table-responsive">
+                  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" align="center" id="sortTable">
+                      <thead>
+                      <tr>
+                        <th>รหัสสั่งซื้อ</th>
+                        <th>วันที่สั่งซื้อ</th>
+                          <!-- <th>ชื่อผู้สั่ง</th> -->
+                          <!-- <th>ชื่อผู้รับออเดอร์</th>
+                          <th>ราคา</th> -->
+                          
+                          <th>สถานะการชำระเงิน</th>
+                         
+                          <th>ตัวเลือกการชำระเงิน</th>
+                          <th>ตัวเลือกการจัดส่ง</th>
+                        
+                          <th>ที่อยู่</th> 
+                          <th>ราคารวม</th>
+                          <th>รายการสินค้า</th>
+                      </tr>
+                      </thead>
+                      <tbody> 
+                       
+                    
+                       
+                      {% for i in orders %}
+                    
+                          <tr>
+                            <td>{{ i.id }}</td>
+                            <td>{{ i.ordered_date }}</td>
+                            <td class> <span class="badge badge-pill badge-{{i.as_bootstrap_status}}">{{ i.money_status }}</span></td>
+                          
+                           
+                            <td> {{i.payment_option}}</td>
+                            <td>{{ i.delivery_options}}</td>
+                            <td> {{i.address}}</td>
+                            <td>{{i.get_total}}</td>
+                            <!-- <td>
+                                   
+                                    {% for n in i.products.all %}
+                
+                                     {{ n.quantity }} x {{ n.product }}&nbsp;
+                
+                                    {% endfor %} 
+                
+                
+                            </td> -->
+                           
+                            <!-- <td>{{ i.user }}</td> -->
+                             
+                             
+                              <!-- <td>{{ i.created_at  |date:"d-m-Y H:i:s" }}</td> -->
+                              <td>                                     
+                                  <a class="btn btn-sm btn-primary" href="/orderproduct/{{i.id}}"> <span></span>รายการสินค้า</a>
+                                 
+                              </td>
+                              <!-- <td><a class="btn btn-sm btn-primary" href="orderproduct/{{order.id}}"><span ></span> รายการสินค้า</a></td> -->
+                          </tr>
+                        
+                         {% endfor %}
+                         
+                        
+                        
+                     
+                      </tbody>
+                  </table><s></s>
+                  {% if orders.has_other_pages %}
+                  <ul class="pagination">
+                    {% if orders.has_previous %}
+                      <li><a class="page-link" href="?page={{ orders.previous_page_number }}">&laquo;  Previous</a></li>
+                      <li><a class="page-link" href="?page={{ orders.previous_page_number }}">{{ orders.previous_page_number }} </a></li>
+                    {% else %}
+                      <li class="disabled page-link"><span>&laquo;Previous</span></li>
+                    {% endif %}
+                      <!--   หน้าปัจจุบัน -->
+                    <li class="page-item active">
+                      <span class="page-link">
+                          <span class="current" >
+                              {{ orders.number }} 
+                            </span>
+                       
+                      </span>
+                    </li>
+                        <!-- หน้าถัดไป -->
+                    {% if orders.has_next %}
+                      
+                      <li><a class="page-link"  href="?page={{ orders.next_page_number }}">Next &raquo; </a></li>
+                    {% else %}
+                      <li class="disabled page-link"><span>Next &raquo;</span></li>
+                    {% endif %}
+                  </ul>
+                {% endif %}
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+{% endblock %}
+
+
