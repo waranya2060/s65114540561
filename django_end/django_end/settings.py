@@ -168,6 +168,7 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 # STATIC_URL = '/static/' 
 AUTH_USER_MODEL = 'api.Users'
 
+STATICFILES_DIRS = [BASE_DIR / "static"]      
 
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "dev-secret")
 DEBUG = os.getenv("DJANGO_DEBUG", "0") == "1"
