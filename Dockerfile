@@ -1,4 +1,3 @@
-# Dockerfile (Python 3.11 + Django + MySQL)
 FROM python:3.11-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
@@ -6,9 +5,13 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1 \
     PIP_NO_CACHE_DIR=1
 
-# เครื่องมือ build และ client lib สำหรับ MySQL
+# ติดตั้งเครื่องมือ build และ client library สำหรับ MySQL
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential gcc default-libmysqlclient-dev pkg-config \
+    build-essential \
+    gcc \
+    default-libmysqlclient-dev \
+    pkg-config \
+    default-mysql-client \
  && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
@@ -27,4 +30,6 @@ COPY . /app/
 RUN python manage.py collectstatic --noinput || true
 
 EXPOSE 8000
+
+# รัน Gunicorn
 CMD ["gunicorn", "--bind", "0.0.0.0:8000", "django_end.wsgi:application"]

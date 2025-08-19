@@ -1,10 +1,11 @@
+version: "3.9"
+
 services:
   web:
     build:
       context: .
       dockerfile: Dockerfile
-    working_dir: /app/django_end            # ← ตรงนี้สำคัญ
-    command: python manage.py runserver 0.0.0.0:8000
+    working_dir: /app/django_end
     env_file:
       - ./.env
     ports:
@@ -12,10 +13,14 @@ services:
     depends_on:
       - db
     volumes:
-      - ./:/app
-      - staticfiles:/app/staticfiles
-      - media:/app/media
-
+      - ./django_end:/app/django_end
+      - staticfiles:/app/django_end/staticfiles
+      - media:/app/django_end/media
+    command: >
+      sh -c "
+        python manage.py migrate --noinput || true;
+        exec gunicorn --bind 0.0.0.0:8000 django_end.wsgi:application
+      "
   db:
     image: mysql:8
     environment:
