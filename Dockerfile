@@ -1,35 +1,23 @@
-FROM python:3.11-slim
+FROM python:3.12-slim
 
-ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1 \
-    PIP_DISABLE_PIP_VERSION_CHECK=1 \
-    PIP_NO_CACHE_DIR=1
-
-# ติดตั้งเครื่องมือ build และ client library สำหรับ MySQL
+# libs สำหรับ PostgreSQL และการรอพอร์ต (nc)
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential \
-    gcc \
-    default-libmysqlclient-dev \
-    pkg-config \
-    default-mysql-client \
- && rm -rf /var/lib/apt/lists/*
+    build-essential libpq-dev netcat-openbsd \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
-# ติดตั้งไลบรารีจาก requirements (ถ้ามีไฟล์)
-COPY requirements.txt /app/
-RUN if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+# ติดตั้งไลบรารี Python
+COPY requirements.txt /app/requirements.txt
+# กันกรณีไฟล์เดิมยังมี mysqlclient (เราใช้ Postgres เท่านั้น)
+RUN sed -i '/^[[:space:]]*mysqlclient[[:space:]]*/Id' /app/requirements.txt \
+    && pip install --no-cache-dir -r /app/requirements.txt \
+    && pip install --no-cache-dir "psycopg[binary]>=3.2,<3.3" gunicorn whitenoise
 
-# ไลบรารีเสริม
-RUN pip install gunicorn mysqlclient dj-database-url
+# คัดลอกโปรเจกต์ให้ path ตรงกับคำสั่ง manage.py ใน compose
+COPY django_end /app/django_end
 
-# คัดลอกโค้ดที่เหลือ
-COPY . /app/
-
-# เก็บ static (ถ้า settings ยังไม่ครบให้ผ่านไปก่อน)
-RUN python manage.py collectstatic --noinput || true
+# โฟลเดอร์ static เมื่อ collectstatic
+RUN mkdir -p /app/staticfiles
 
 EXPOSE 8000
-
-# รัน Gunicorn
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "django_end.wsgi:application"]

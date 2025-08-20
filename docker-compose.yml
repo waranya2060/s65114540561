@@ -1,44 +1,42 @@
-version: "3.9"
-
 services:
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "${DB_HOST_PORT:-5432}:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB} -h 127.0.0.1 || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 15s
+
   web:
     build:
       context: .
       dockerfile: Dockerfile
-    working_dir: /app/django_end
+    restart: unless-stopped
     env_file:
-      - ./.env
-    ports:
-      - "8000:8000"
+      - .env
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+    ports:
+      - "${WEB_PORT:-8000}:8000"   # เปิดผ่าน http://localhost:8000 และจากนอกที่ http://202.28.49.122:8000
     volumes:
       - ./django_end:/app/django_end
-      - staticfiles:/app/django_end/staticfiles
-      - media:/app/django_end/media
-    command: >
-      sh -c "
-        python manage.py migrate --noinput || true;
-        exec gunicorn --bind 0.0.0.0:8000 django_end.wsgi:application
-      "
-  db:
-    image: mysql:8
-    environment:
-      MYSQL_DATABASE: ${DB_NAME}
-      MYSQL_USER: ${DB_USER}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
-      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
-    ports:
-      - "3307:3306"
-    volumes:
-      - dbdata:/var/lib/mysql
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p${DB_ROOT_PASSWORD}"]
-      interval: 5s
-      timeout: 3s
-      retries: 30
+      - static_volume:/app/staticfiles
+    command:  ["bash","-lc","set -e; \
+      echo 'wait pg...'; until nc -z ${DB_HOST:-db} ${DB_PORT:-5432}; do echo .; sleep 2; done; \
+      echo 'migrate'; python -u /app/django_end/manage.py migrate --noinput; \
+      echo 'start gunicorn'; exec gunicorn --chdir /app/django_end --workers 3 --bind 0.0.0.0:8000 --access-logfile - --error-logfile - django_end.wsgi:application"]
 
 volumes:
-  dbdata:
-  staticfiles:
-  media:
+  pg_data:
+  static_volume:
