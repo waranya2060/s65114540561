@@ -28,7 +28,7 @@ services:
       db:
         condition: service_healthy
     ports:
-      - "${WEB_PORT:-8000}:8000"   # เปิดผ่าน http://localhost:8000 และจากนอกที่ http://202.28.49.122:8000
+      - "${WEB_PORT:-8000}:8000"
     volumes:
       - ./django_end:/app/django_end
       - static_volume:/app/staticfiles
@@ -36,6 +36,13 @@ services:
       echo 'wait pg...'; until nc -z ${DB_HOST:-db} ${DB_PORT:-5432}; do echo .; sleep 2; done; \
       echo 'migrate'; python -u /app/django_end/manage.py migrate --noinput; \
       echo 'start gunicorn'; exec gunicorn --chdir /app/django_end --workers 3 --bind 0.0.0.0:8000 --access-logfile - --error-logfile - django_end.wsgi:application"]
+
+  redis:
+    image: redis:7
+    restart: unless-stopped
+    ports:
+      - "30561:6379"   # redis ของคุณที่พอร์ต 30561
+
 
 volumes:
   pg_data:
