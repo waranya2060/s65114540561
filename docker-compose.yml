@@ -1,13 +1,15 @@
+version: '3.8'
+
 services:
   db:
     image: postgres:16
     restart: unless-stopped
+    env_file:
+      - .env
     environment:
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
-    ports:
-      - "${DB_HOST_PORT:-5432}:5432"
     volumes:
       - pg_data:/var/lib/postgresql/data
     healthcheck:
@@ -16,6 +18,7 @@ services:
       timeout: 5s
       retries: 30
       start_period: 15s
+ 
 
   web:
     build:
@@ -28,22 +31,25 @@ services:
       db:
         condition: service_healthy
     ports:
-      - "${WEB_PORT:-8000}:8000"
+      - "${WEB_PORT}:8000"
     volumes:
       - ./django_end:/app/django_end
       - static_volume:/app/staticfiles
     command:  ["bash","-lc","set -e; \
-      echo 'wait pg...'; until nc -z ${DB_HOST:-db} ${DB_PORT:-5432}; do echo .; sleep 2; done; \
+      echo 'wait pg...'; until nc -z ${DB_HOST} ${DB_PORT}; do echo .; sleep 2; done; \
       echo 'migrate'; python -u /app/django_end/manage.py migrate --noinput; \
       echo 'start gunicorn'; exec gunicorn --chdir /app/django_end --workers 3 --bind 0.0.0.0:8000 --access-logfile - --error-logfile - django_end.wsgi:application"]
 
   redis:
     image: redis:7
     restart: unless-stopped
-    ports:
-      - "30561:6379"   # redis ของคุณที่พอร์ต 30561
-
+    # ถ้าไม่ต้องการ expose redis ออกภายนอก ให้ลบหรือ comment ports:
+    # ports:
+    #   - "30561:6379"
+    volumes:
+      - redis_data:/data
 
 volumes:
   pg_data:
   static_volume:
+  redis_data:
